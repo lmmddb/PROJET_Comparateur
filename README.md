@@ -46,8 +46,11 @@ install.packages(c("RSelenium", "dplyr", "ggplot2", "stringr", "rvest", "httr", 
 Pour exécuter le projet, suivez les étapes ci-dessous :
 
    1. Ouvrez le fichier projet_technique_de_programmation.Rmd dans RStudio.
-   2. Exécutez chaque bloc de code pour récupérer les données, effectuer les analyses et générer les visualisations.
-    Pour générer la présentation PowerPoint, cliquez sur Knit et sélectionnez PowerPoint.
+   2. Configurez un serveur Selenium :
+   3. Exécutez : library(wdman) et démarrez le serveur via geckodriver().
+   4. Lancez le script complet pour scraper les données, les nettoyer et générer des visualisations.
+   5. Exécutez chaque bloc de code pour récupérer les données, effectuer les analyses et générer les visualisations.
+    
 
 
 Ce projet a été développé avec :
