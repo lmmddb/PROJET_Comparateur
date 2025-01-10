@@ -1,16 +1,18 @@
-# PROJET_Comparateur
+# PROJET D'ANALYSE DES PRIX
 Projet Master APE - Comparateur de prix 
-# Projet Technique de Programmation  
+# Projet de Technique de Programmation  
 
 ## Description du projet  
 Ce projet consiste à comparer les prix des pommes entre deux supermarchés, Franprix et Carrefour, en utilisant le scraping web et des analyses statistiques. 
-Ainsi avec notre programme un consommateur peut retrouver les prix de n'importe quel produit dans divers supermarchés juste en changeant les variables de notre fonctin de récupération de prix.
+Ainsi avec notre programme un consommateur peut retrouver les prix de n'importe quel produit dans divers supermarchés juste en changeant les variables de notre fonction de récupération de prix.
 
 ## Les principales fonctionnalités incluent :
 
--L'extraction des noms et prix des produits via la bibliothèque RSelenium.
--Le nettoyage et la préparation des données pour une analyse robuste.
--Des visualisations interactives et des statistiques descriptives pour mieux comprendre les variations de prix.
+1. L'extraction des noms et prix des produits via la bibliothèque RSelenium.
+
+2. Le nettoyage et la préparation des données pour une analyse robuste.
+
+3. Des visualisations interactives et des statistiques descriptives pour mieux comprendre les variations de prix.
 
 
 ## Pour commencer  
@@ -21,7 +23,7 @@ Voici les étapes nécessaires pour commencer avec ce projet.
 Avant de démarrer, assurez-vous d'avoir les éléments suivants :  
 
 - **R** (version 4.0 ou supérieure)
-- GECKODRIVER pour les utilistaeurs de firefix
+- GECKODRIVER pour les utilistaeurs de firefox
 - Javascript installé 
 - Les bibliothèques R suivantes :  
   - `RSelenium`  
@@ -35,7 +37,7 @@ Avant de démarrer, assurez-vous d'avoir les éléments suivants :
 
 ### Installation  
 
-1. Clonez ce dépôt GitHub sur votre machine locale :  
+Clonez ce dépôt GitHub sur votre machine locale :  
 
 Installez les bibliothèques R nécessaires :
 
@@ -45,13 +47,11 @@ install.packages(c("RSelenium", "dplyr", "ggplot2", "stringr", "rvest", "httr", 
 
 Pour exécuter le projet, suivez les étapes ci-dessous :
 
-   1. Ouvrez le fichier projet_technique_de_programmation.Rmd dans RStudio.
-   2. Configurez un serveur Selenium :
-   3. Exécutez : library(wdman) et démarrez le serveur via geckodriver().
+   1. Ouvrez le fichier code propre 1.0.R dans RStudio.
+   2. Rassurez vous d'utiliser firefox et geckodriver
+   3. Rassurez vous que Rselenium est bien configuré.
    4. Lancez le script complet pour scraper les données, les nettoyer et générer des visualisations.
-   5. Exécutez chaque bloc de code pour récupérer les données, effectuer les analyses et générer les visualisations.
     
-
 
 Ce projet a été développé avec :
 
@@ -76,8 +76,9 @@ Dernière version : 1.0
 Ce projet est développé dans le cadre d'un cours universitaire en techniques de programmation à l'Université de Strasbourg.
 
 ## Équipe projet :
--Étudiant 1 KAMEDA Patrice Thomas;
--Étudiant 2 DJAU Mamadou.
+ - KAMEDA Patrice Thomas;
+ 
+ - DJAU Mamadou.
 
 ## Merci d’utiliser notre projet et d’apporter vos retours pour l’améliorer !
 
