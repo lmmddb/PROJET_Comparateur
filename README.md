@@ -14,7 +14,10 @@ Voici les étapes nécessaires pour commencer avec ce projet.
 ### Pré-requis  
 Avant de démarrer, assurez-vous d'avoir les éléments suivants :  
 
-- **R** (version 4.0 ou supérieure)  
+- **R** (version 4.0 ou supérieure)
+- GECKODRIVER pour les utilistaeurs de firefix
+- chromedriver pour les utilisateurs de chrome
+- Javascript installé 
 - Les bibliothèques R suivantes :  
   - `RSelenium`  
   - `dplyr`  
