@@ -63,23 +63,21 @@ Ce projet a été développé avec :
 
     
 ## ❓ Où obtenir de l’aide
-Pour toute question ou problème, vous pouvez :
-
-Contacter l'équipe projet (voir section "Mainteneurs").
+Pour toute question ou problème, vous pouvez Contacter l'équipe projet (voir section "Mainteneurs").
 
 ### Contributing
 
 Les contributions sont les bienvenues !
-Versions
 
-Dernière version stable : 1.0
+## Versions
 Dernière version : 1.0
 
-Liste des versions : Cliquer pour afficher
+## 👩‍💻 Mainteneurs
+Ce projet est développé dans le cadre d'un cours universitaire en techniques de programmation à l'Université de Strasbourg.
 
-### Auteurs
+## Équipe projet :
+-Étudiant 1 KAMEDA Patrice Thomas;
+-Étudiant 2 DJAU Mamadou.
 
-    -KAMEDA PATRICE THOMAS alias @patrice20035
-    -MAMADOU
-
+## Merci d’utiliser notre projet et d’apporter vos retours pour l’améliorer !
 
