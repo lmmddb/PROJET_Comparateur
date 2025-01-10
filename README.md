@@ -60,7 +60,12 @@ Ce projet a été développé avec :
     RSelenium - Bibliothèque R pour le web scraping avec Selenium
     
     ggplot2 - Librairie R pour la visualisation des données
+
     
+## ❓ Où obtenir de l’aide
+Pour toute question ou problème, vous pouvez :
+
+Contacter l'équipe projet (voir section "Mainteneurs").
 
 ### Contributing
 
