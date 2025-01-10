@@ -28,9 +28,6 @@ Avant de démarrer, assurez-vous d'avoir les éléments suivants :
 ### Installation  
 
 1. Clonez ce dépôt GitHub sur votre machine locale :  
-   ```bash
-   git clone https://github.com/votre-utilisateur/projet-technique-programmation.git
-   cd projet-technique-programmation
 
 Installez les bibliothèques R nécessaires :
 
@@ -48,9 +45,11 @@ Pour exécuter le projet, suivez les étapes ci-dessous :
 Ce projet a été développé avec :
 
     RStudio - Environnement de développement pour R
+    
     RSelenium - Bibliothèque R pour le web scraping avec Selenium
+    
     ggplot2 - Librairie R pour la visualisation des données
-    Docker - Outil pour l'exécution de Selenium
+    
 
 ### Contributing
 
