@@ -6,6 +6,12 @@ Projet Master APE - Comparateur de prix
 Ce projet consiste à comparer les prix des pommes entre deux supermarchés, Franprix et Carrefour, en utilisant le scraping web et des analyses statistiques. 
 Ainsi avec notre programme un consommateur peut retrouver les prix de n'importe quel produit dans divers supermarchés juste en changeant les variables de notre fonctin de récupération de prix.
 
+## Les principales fonctionnalités incluent :
+
+-L'extraction des noms et prix des produits via la bibliothèque RSelenium.
+-Le nettoyage et la préparation des données pour une analyse robuste.
+-Des visualisations interactives et des statistiques descriptives pour mieux comprendre les variations de prix.
+
 
 ## Pour commencer  
 
