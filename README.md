@@ -1,4 +1,4 @@
-# Projet de technique de programmation - Comparateur de prix 
+# Projet de technique de programmation - COLLECTE ET ANALYSE AUTOMATISEE DES PRIX DES POMMES DANS DIFFERENTS SUPERMARCHES
 
 ## Description du projet  
 Ce projet consiste à comparer les prix des pommes entre deux supermarchés, Franprix et Carrefour, en utilisant les méthodes de scraping web et des analyses statistiques. 
