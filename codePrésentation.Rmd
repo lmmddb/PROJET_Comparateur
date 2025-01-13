@@ -1,0 +1,316 @@
+---
+title: "PROJET D'AUTOMATISATION DE LA COMPARAISON Du PRIX D'UN PRODUIT ENTRE SUPERMARCHES : CAS DE LA POMME ENTRE FRANPRIX ET CARREFOUR"
+author: "PATRICE THOMAS KAMEDA; ET MAMADOU DJAU"
+date: "`r Sys.Date()`"
+output: powerpoint_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+# Introduction
+
+-   **Objectif** :
+    -   Analyser et comparer les prix des pommes de deux supermarchés : **Franprix** et **Carrefour**.
+-   **Approche** :
+    1.  Extraction des données des sites web avec des outils d'automatisation (**RSelenium**).
+    2.  Analyse des prix pour identifier des tendances et des différences.
+    3.  Visualisation des résultats pour faciliter la compréhension.
+
+**Problématique** : Les consommateurs veulent savoir où acheter des pommes au meilleur prix tout en identifiant des variations de prix significatives.
+
+------------------------------------------------------------------------
+
+# Chargement des bibliothèques nécessaires
+
+Les bibliothèques suivantes sont utilisées dans ce projet :
+
+-   **RSelenium** : Automatisation de la navigation sur les sites web dynamiques.
+
+-   **dplyr** : Manipulation des données.
+
+-   **stringr** : Nettoyage et transformation de texte.
+
+-   **rvest** et **httr** : Outils pour le scraping de sites web.
+
+-   **ggplot2** : Visualisation des données.
+
+------------------------------------------------------------------------
+
+## Bibliothèques nécessaires
+
+```{r}
+library(RSelenium)
+library(dplyr)
+library(stringr)
+library(rvest)
+library(httr)
+library(wdman)
+library(netstat)
+library(ggplot2)
+library(tidyr)
+```
+
+------------------------------------------------------------------------
+
+# Initialisation de Selenium
+
+-   **Pourquoi Selenium ?**
+    -   Certains sites utilisent du JavaScript pour afficher leurs contenus. Les méthodes classiques de scraping (par exemple, `rvest`) ne suffisent donc pas.
+    -   **RSelenium** permet de naviguer, interagir et extraire des données dynamiques en simulant un vrai navigateur.
+
+------------------------------------------------------------------------
+
+## Initialisation de Selenium
+
+```{r}
+start_selenium <- function(browser = "firefox", port = free_port()) {
+  rD <- rsDriver(browser = browser, verbose = FALSE, port = port)
+  remDr <- rD$client
+  list(rD = rD, remDr = remDr)
+}
+
+sel <- start_selenium()
+remDr <- sel$remDr
+```
+
+------------------------------------------------------------------------
+
+# Fonction de collecte des données
+
+## Extraire les noms des produits
+
+name_elements \<- remDr$findElements(using = "css selector", value = name_selector)
+  names <- sapply(name_elements, function(el) el$getElementText()) %\>% unlist()
+
+## Extraire les prix des produits
+
+price_elements \<- remDr\$findElements(using = "css selector", value = price_selector)
+
+prices \<- sapply(price_elements, function(el) el\$getElementText()[[1]])
+
+## Nettoyer les prix pour les convertir en format numérique
+
+prices \<- prices %\>% gsub(",", ".", .) %\>% \# Remplacer les virgules par des points gsub("[\^0-9.]", "", .) %\>% \# Supprimer tout sauf les chiffres et les points as.numeric() \# Convertir en numérique
+
+## Vérifier les longueurs et ajuster
+
+if(length(names) \> length(prices)) { names \<- names[1:length(prices)] } else if (length(prices) \> length(names)) { prices \<- prices[1:length(names)] }
+
+## Créer un data.frame et exclure les lignes avec des prix NA ou nuls
+
+data \<- data.frame(Name = names, Price = prices, stringsAsFactors = FALSE) data \<- data %\>% filter(!is.na(Price) & Price \> 0) return(data) }
+
+```{r}
+get_apples_data <- function(remDr, url, name_selector, price_selector, delay = 5) {
+  remDr$navigate(url)
+  Sys.sleep(delay)
+  
+  name_elements <- remDr$findElements(using = "css selector", value = name_selector)
+  names <- sapply(name_elements, function(el) el$getElementText()) %>% unlist()
+  
+  price_elements <- remDr$findElements(using = "css selector", value = price_selector)
+  prices <- sapply(price_elements, function(el) el$getElementText()[[1]])
+  
+  prices <- prices %>%
+    gsub(",", ".", .) %>%
+    gsub("[^0-9.]", "", .) %>%
+    as.numeric()
+  
+  if (length(names) > length(prices)) {
+    names <- names[1:length(prices)]
+  } else if (length(prices) > length(names)) {
+    prices <- prices[1:length(names)]
+  }
+  
+  data <- data.frame(Name = names, Price = prices, stringsAsFactors = FALSE)
+  data <- data %>% filter(!is.na(Price) & Price > 0)
+  return(data)
+}
+```
+
+------------------------------------------------------------------------
+
+# URLs et sélecteurs CSS
+
+```{r}
+franprix_url <- "https://www.franprix.fr/courses/c/pomme-poire-raisin"
+franprix_name_selector <- ".product-item-name"
+franprix_price_selector <- ".product-item-price"
+
+carrefour_url <- "https://www.carrefour.fr/r/fruits-et-legumes/fruits/pommes-poires-et-raisins/pommes"
+carrefour_name_selector <- "h3.c-text--style-p"
+carrefour_price_selector <- ".product-price__content"
+```
+
+# Extraction des données
+
+-   **Étapes principales** :
+    1.  Naviguer vers les sites web cibles.
+    2.  Identifier les sélecteurs CSS pour les noms et les prix des produits.
+    3.  Récupérer les données dynamiques et les nettoyer pour une analyse statistique.
+
+**Remarque :** Les sélecteurs CSS doivent être adaptés au contenu HTML de chaque site web.
+
+------------------------------------------------------------------------
+
+# Extraction des données
+
+```{r}
+franprix_data <- tryCatch({
+  get_apples_data(remDr, franprix_url, franprix_name_selector, franprix_price_selector)
+}, error = function(e) {
+  message("Erreur Franprix : ", e)
+  NULL
+})
+
+carrefour_data <- tryCatch({
+  get_apples_data(remDr, carrefour_url, carrefour_name_selector, carrefour_price_selector)
+}, error = function(e) {
+  message("Erreur Carrefour : ", e)
+  NULL
+})
+
+remDr$close()
+sel$rD$server$stop()
+```
+
+------------------------------------------------------------------------
+
+# Données récupérées
+
+# Franprix
+
+```{r}
+franprix_data
+print(franprix_data)
+```
+
+------------------------------------------------------------------------
+
+# Carrefour
+
+```{r}
+print(carrefour_data)
+```
+
+------------------------------------------------------------------------
+
+# Analyse des données
+
+# Fusion des données
+
+```{r}
+combined_data <- bind_rows(
+  franprix_data %>% mutate(Supermarket = "Franprix"),
+  carrefour_data %>% mutate(Supermarket = "Carrefour")
+)
+```
+
+------------------------------------------------------------------------
+
+# Statistiques descriptives
+
+```{r}
+stats <- combined_data %>%
+  group_by(Supermarket) %>%
+  summarise(
+    Average_Price = mean(Price, na.rm = TRUE),
+    SD_Price = sd(Price, na.rm = TRUE),
+    Min_Price = min(Price, na.rm = TRUE),
+    Max_Price = max(Price, na.rm = TRUE)
+  )
+stats
+```
+
+------------------------------------------------------------------------
+
+# Visualisation des données
+
+1.  **Boxplot** : Comparaison de la distribution des prix.
+2.  **Histogramme** : Fréquences des prix par supermarché.
+3.  **Nuage de points** : Comparaison des prix par produit.
+
+**Objectif** : Identifier visuellement les tendances et les différences.
+
+------------------------------------------------------------------------
+
+# Visualisation : Distribution des prix
+
+# Boxplot
+
+```{r}
+ggplot(combined_data, aes(x = Supermarket, y = Price, fill = Supermarket)) +
+  geom_boxplot() +
+  theme_minimal() +
+  labs(title = "Distribution des prix par supermarché", x = "Supermarché", y = "Prix (€)")
+```
+
+------------------------------------------------------------------------
+
+# Visualisation : Histogramme
+
+```{r}
+ggplot(combined_data, aes(x = Price, fill = Supermarket)) +
+  geom_histogram(binwidth = 0.5, position = "dodge", alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Histogramme des prix", x = "Prix (€)", y = "Fréquence") +
+  scale_fill_manual(values = c("Carrefour" = "blue", "Franprix" = "orange"))
+```
+
+------------------------------------------------------------------------
+
+# Visualisation : Nuage de points
+
+```{r}
+ggplot(combined_data, aes(x = Name, y = Price, color = Supermarket)) +
+  geom_point(size = 3, alpha = 0.7) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Nuage de points des prix par produit", x = "Produit", y = "Prix (€)") +
+  scale_color_manual(values = c("Carrefour" = "blue", "Franprix" = "orange"))
+```
+
+------------------------------------------------------------------------
+
+# Visualisation : Nuage de points
+
+```{r, fig.width=12, fig.height=8}
+ggplot(combined_data, aes(x = Name, y = Price, color = Supermarket)) +
+  geom_point(size = 3, alpha = 0.7) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 12),  # Augmenter la taille du texte
+    plot.title = element_text(size = 16),  # Taille du titre
+    axis.title.x = element_text(size = 14),  # Taille de l'axe des x
+    axis.title.y = element_text(size = 14)   # Taille de l'axe des y
+  ) +
+  labs(title = "Nuage de points des prix par produit",
+       x = "Produit",
+       y = "Prix (€)",
+       color = "Supermarché") +
+  scale_color_manual(values = c("Carrefour" = "blue", "Franprix" = "orange"))
+```
+
+------------------------------------------------------------------------
+
+# **Conclusion**
+
+-   Les données montrent une variation de prix notable entre Carrefour et Franprix.
+-   **Franprix** semble en moyenne plus cher que **Carrefour**, comme le montre le boxplot.
+
+Pour toute question ou suggestion, n'hésitez pas à me contacter !
+
+------------------------------------------------------------------------
+
+-   **Résultats obtenus** :
+    -   Franprix a tendance à afficher des prix plus bas pour certains produits.
+    -   Carrefour présente une plus grande variabilité dans les prix.
+-   **Prochaines étapes** :
+    -   Étendre l'analyse à d'autres produits et supermarchés.
+    -   Étudier l'impact de la saisonnalité sur les prix.
+
+**Merci pour votre attention !**
+
+------------------------------------------------------------------------
