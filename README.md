@@ -1,9 +1,7 @@
-# PROJET D'ANALYSE DES PRIX
-Projet Master APE - Comparateur de prix 
-# Projet de Technique de Programmation  
+# Projet de technique de programmation - Comparateur de prix 
 
 ## Description du projet  
-Ce projet consiste à comparer les prix des pommes entre deux supermarchés, Franprix et Carrefour, en utilisant le scraping web et des analyses statistiques. 
+Ce projet consiste à comparer les prix des pommes entre deux supermarchés, Franprix et Carrefour, en utilisant les méthodes de scraping web et des analyses statistiques. 
 Ainsi avec notre programme un consommateur peut retrouver les prix de n'importe quel produit dans divers supermarchés juste en changeant les variables de notre fonction de récupération de prix.
 
 ## Les principales fonctionnalités incluent :
@@ -48,7 +46,7 @@ install.packages(c("RSelenium", "dplyr", "ggplot2", "stringr", "rvest", "httr", 
 Pour exécuter le projet, suivez les étapes ci-dessous :
 
    1. Ouvrez le fichier code propre 1.0.R dans RStudio.
-   2. Rassurez vous d'utiliser firefox et geckodriver
+   2. Rassurez vous d'utiliser firefox et geckodriver.
    3. Rassurez vous que Rselenium est bien configuré.
    4. Lancez le script complet pour scraper les données, les nettoyer et générer des visualisations.
     
@@ -76,7 +74,7 @@ Dernière version : 1.0
 Ce projet est développé dans le cadre d'un cours universitaire en techniques de programmation à l'Université de Strasbourg.
 
 ## Équipe projet :
- - KAMEDA Patrice Thomas;
+ - KAMEDA Patrice Thomas ;
  
  - DJAU Mamadou.
 
