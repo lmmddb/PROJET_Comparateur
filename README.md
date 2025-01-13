@@ -77,6 +77,8 @@ Ce projet est développé dans le cadre d'un cours universitaire en techniques d
  - KAMEDA Patrice Thomas ;
  
  - DJAU Mamadou.
+## Conclusion
+Ce projet illustre comment combiner des outils de scraping et d’analyse statistique pour obtenir des insights exploitables. Malgré certaines limitations techniques, les méthodes utilisées sont adaptables et extensibles pour des études plus complexes ou diversifiées.
 
 ## Merci d’utiliser notre projet et d’apporter vos retours pour l’améliorer !
 
